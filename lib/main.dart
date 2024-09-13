@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:new_studies/screens/onboarding_screen%20copy%202.dart';
+import 'package:new_studies/screens/slugs_screen.dart';
 
 void main() {
   runApp(const Myapp());

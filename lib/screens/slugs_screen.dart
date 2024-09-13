@@ -1,22 +1,26 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class SlugScreen extends StatefulWidget {
-  const SlugScreen({super.key});
+class SlugsScreen extends StatefulWidget {
+  const SlugsScreen({super.key});
 
   @override
-  State<SlugScreen> createState() => _SlugScreenState();
+  State<SlugsScreen> createState() => _SlugsScreenState();
 }
 
-class _SlugScreenState extends State<SlugScreen> {
+class _SlugsScreenState extends State<SlugsScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          Image.asset("assets/onboarding.jpg")
-        ],
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Stack(
+           children: [ 
+            Image.asset("assets/food3.jpg" ,fit: BoxFit.cover,),
+          ],
+        ),
       ),
     );
   }

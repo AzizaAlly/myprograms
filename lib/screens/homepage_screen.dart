@@ -1,8 +1,10 @@
+import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_studies/screens/slugs_screen.dart';
 
 class HomePageScreen extends StatefulWidget {
   const HomePageScreen({super.key});
@@ -20,7 +22,26 @@ class _HomePageScreenState extends State<HomePageScreen> {
     "Sapa",
     "Dinner"
   ];
+
   int currentBtn = 0;
+  final data = [
+    {"name1": "What will we\n cook today?", 
+    "image1": "assets/image4.png"},
+    {
+      "name1": "Very delicious \n favourable food",
+      "image1": "assets/pizza1.png"
+    },
+    {
+      "name1": "Cheap and affordable\n everywhere",
+      "image1": "assets/pizza3.png"
+    },
+    {
+      "name1": "Healthly and more \n easy to cook",
+      "image1": "assets/food1.png"
+    },
+  ];
+  PageController pageController = PageController();
+  int pageno = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,15 +66,21 @@ class _HomePageScreenState extends State<HomePageScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(50),
-                              image: const DecorationImage(
-                                  image: AssetImage("assets/home.jpg"),
-                                  fit: BoxFit.cover)),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SlugsScreen())),
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(50),
+                                image: const DecorationImage(
+                                    image: AssetImage("assets/home.jpg"),
+                                    fit: BoxFit.cover)),
+                          ),
                         ),
                         Container(
                           height: 50,
@@ -131,104 +158,104 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         child: Container(
                           clipBehavior: Clip.hardEdge,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(0)
-                          ),
+                              borderRadius: BorderRadius.circular(0)),
                           child: BackdropFilter(
                             filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
-                            child: Stack(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 15.0),
-                                  child: Container(
-                                    height: 250,
-                                    width: 410,
-                                    decoration: BoxDecoration(
-                                      color: const Color.fromARGB(48, 45, 46, 46)
-                                          .withOpacity(0.2),
-                                      borderRadius: BorderRadius.circular(34),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 120),
-                                  child: Positioned(
-                                      top: 100,
-                                      child: Image.asset(
-                                        "assets/image4.png",
-                                        height: 250,
-                                        width: 150,
-                                        alignment: AlignmentDirectional.topCenter,
-                                      )),
-                                ),
-                                const Spacer(),
-                                const Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(top: 110),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 15.0),
-                                          child: Icon(
-                                            CupertinoIcons.chevron_left,
-                                            color: Colors.white,
-                                            
-                                          ),
+                            child: SizedBox(
+                              height: MediaQuery.of(context).size.height / 2.2,
+                              
+                              child: PageView.builder(
+                                controller: pageController,
+                                itemCount: data.length,
+                                itemBuilder: (context, index) => Stack(
+                                  children: [
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(right: 15.0),
+                                      child: Container(
+                                        width: 500,
+                                        decoration: BoxDecoration(
+                                          color: const Color.fromARGB(
+                                                  48, 45, 46, 46)
+                                              .withOpacity(0.2),
+                                          borderRadius:
+                                              BorderRadius.circular(34),
                                         ),
-                                        Spacer(),
-                                        Spacer(),
-                                         Spacer(),
-                                         Spacer(),
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 15.0),
-                                          child: Icon(
-                                            CupertinoIcons.chevron_right,
-                                            color: Colors.white,
-                                            
-                                          ),
-                                        ),
-                                        Spacer(),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 140.0,right: 38),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text("Quick Lunch",
+                                        child: Column(
+                                          children: [
+                                            Center(
+                                              child: Image.asset(
+                                                data[index]["image1"]!,
+                                                height: 200,
+                                                width: 200,
+                                                fit: BoxFit.contain,
+                                                alignment: AlignmentDirectional
+                                                    .topCenter,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Text("Quick Lunch",
+                                                  style: GoogleFonts.alice(
+                                                    textStyle: const TextStyle(
+                                                        color: Colors.white),
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w500,
+                                                  )),
+                                            ),
+                                            const Spacer(),
+                                            Center(
+                                                child: Text(
+                                              data[index]["name1"]!,
                                               style: GoogleFonts.alice(
                                                 textStyle: const TextStyle(
                                                     color: Colors.white),
-                                                fontSize: 20,
+                                                fontSize: 16,
                                                 fontWeight: FontWeight.w500,
-                                              )),
+                                              ),
+                                            )),
+                                            const Spacer(),
+                                          ],
                                         ),
-                                        Center(
-                                            child: Text(
-                                          "Includes  tomato,bread,\nvegetables and lemon",
-                                          style: GoogleFonts.alice(
-                                            textStyle: const TextStyle(
-                                                color: Colors.white),
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ))
-                                      ]),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 10),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 12.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  pageController.animateToPage(pageno-1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
+                                                },
+                                                child: const Icon(CupertinoIcons.chevron_back, color: Colors.white,)),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(right: 24.0),
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  pageController.animateToPage(pageno+1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
+                                                },
+                                                child: const Icon(CupertinoIcons.chevron_forward, color: Colors.white,)),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         )),
                   ),
                   const Spacer(),
                   const Spacer(),
-
                   Padding(
                     padding: const EdgeInsets.only(left: 60),
                     child: Container(
@@ -240,7 +267,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                         color: const Color.fromARGB(75, 74, 75, 73),
                         borderRadius: BorderRadius.circular(50),
                       ),
-                      child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 24,sigmaY: 24),
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                         child: Row(
                           children: [
                             Padding(
@@ -278,8 +306,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 width: 50,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
-                                    color:
-                                        const Color.fromARGB(57, 158, 158, 158)),
+                                    color: const Color.fromARGB(
+                                        57, 158, 158, 158)),
                                 child: const Icon(
                                   CupertinoIcons.heart,
                                   color: Colors.white,
@@ -293,8 +321,8 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                 width: 50,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(50),
-                                    color:
-                                        const Color.fromARGB(50, 158, 158, 158)),
+                                    color: const Color.fromARGB(
+                                        50, 158, 158, 158)),
                                 child: const Icon(
                                   CupertinoIcons.settings,
                                   color: Colors.white,
