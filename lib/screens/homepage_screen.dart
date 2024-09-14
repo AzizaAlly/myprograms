@@ -1,9 +1,10 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:new_studies/models/food_model.dart';
+import 'package:new_studies/screens/aziza_text.dart';
 import 'package:new_studies/screens/slugs_screen.dart';
 
 class HomePageScreen extends StatefulWidget {
@@ -24,22 +25,6 @@ class _HomePageScreenState extends State<HomePageScreen> {
   ];
 
   int currentBtn = 0;
-  final data = [
-    {"name1": "What will we\n cook today?", 
-    "image1": "assets/image4.png"},
-    {
-      "name1": "Very delicious \n favourable food",
-      "image1": "assets/pizza1.png"
-    },
-    {
-      "name1": "Cheap and affordable\n everywhere",
-      "image1": "assets/pizza3.png"
-    },
-    {
-      "name1": "Healthly and more \n easy to cook",
-      "image1": "assets/food1.png"
-    },
-  ];
   PageController pageController = PageController();
   int pageno = 0;
   @override
@@ -97,14 +82,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 24.0, vertical: 8),
-                    child: Text(
-                      "What will we\ncook today?",
-                      style: GoogleFonts.alice(
-                          textStyle: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 32,
-                              fontWeight: FontWeight.w600)),
-                    ),
+                    child: AzizaText(name: "What will we\ncook today?", size: 32,)
                   ),
                   SizedBox(
                     height: 50,
@@ -163,13 +141,12 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height / 2.2,
-                              
                               child: PageView.builder(
                                 controller: pageController,
-                                itemCount: data.length,
                                 onPageChanged: (value) => setState(() {
                                   pageno = value;
                                 }),
+                                itemCount: FoodModelData.fooddata.length,
                                 itemBuilder: (context, index) => Stack(
                                   children: [
                                     Padding(
@@ -186,14 +163,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Center(
-                                              child: Image.asset(
-                                                data[index]["image1"]!,
-                                                height: 200,
-                                                width: 200,
-                                                fit: BoxFit.contain,
-                                                alignment: AlignmentDirectional
-                                                    .topCenter,
+                                            GestureDetector(
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                     const   SlugsScreen(),
+                                                  )),
+                                              child: Center(
+                                                child: Image.asset(
+                                                  FoodModelData.fooddata[index].image1,
+                                                  height: 200,
+                                                  width: 200,
+                                                  fit: BoxFit.contain,
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .topCenter,
+                                                ),
                                               ),
                                             ),
                                             Padding(
@@ -210,7 +196,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                             const Spacer(),
                                             Center(
                                                 child: Text(
-                                              data[index]["name1"]!,
+                                             FoodModelData.fooddata[index].name1,
                                               style: GoogleFonts.alice(
                                                 textStyle: const TextStyle(
                                                     color: Colors.white),
@@ -231,20 +217,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 12.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 12.0),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  pageController.animateToPage(pageno-1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
-                                                },
-                                                child: const Icon(CupertinoIcons.chevron_back, color: Colors.white,)),
+                                                  onTap: () {
+                                                    pageController.animateToPage(
+                                                        pageno - 1,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        curve: Curves
+                                                            .fastLinearToSlowEaseIn);
+                                                  },
+                                                  child: const Icon(
+                                                    CupertinoIcons.chevron_back,
+                                                    color: Colors.white,
+                                                  )),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(right: 24.0),
+                                              padding: const EdgeInsets.only(
+                                                  right: 24.0),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  pageController.animateToPage(pageno+1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
-                                                },
-                                                child: const Icon(CupertinoIcons.chevron_forward, color: Colors.white,)),
+                                                  onTap: () {
+                                                    pageController.animateToPage(
+                                                        pageno + 1,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        curve: Curves
+                                                            .fastLinearToSlowEaseIn);
+                                                  },
+                                                  child: const Icon(
+                                                    CupertinoIcons
+                                                        .chevron_forward,
+                                                    color: Colors.white,
+                                                  )),
                                             ),
                                           ],
                                         ),

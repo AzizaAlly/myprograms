@@ -6,15 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 // ignore: must_be_immutable
 class AzizaText extends StatelessWidget {
   String name;
-  AzizaText({super.key, required this.name});
+  double? size;
+  AzizaText({super.key, required this.name, this.size});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       name,
       style: GoogleFonts.alice(
-          textStyle: const TextStyle(
-              color: Colors.white, fontSize: 50, fontWeight: FontWeight.w600)),
+          textStyle: TextStyle(
+              color: Colors.white, fontSize: size ?? 45, fontWeight: FontWeight.w600)),
     );
   }
 }
