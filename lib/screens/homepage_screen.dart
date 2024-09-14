@@ -167,6 +167,9 @@ class _HomePageScreenState extends State<HomePageScreen> {
                               child: PageView.builder(
                                 controller: pageController,
                                 itemCount: data.length,
+                                onPageChanged: (value) => setState(() {
+                                  pageno = value;
+                                }),
                                 itemBuilder: (context, index) => Stack(
                                   children: [
                                     Padding(

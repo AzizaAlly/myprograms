@@ -18,7 +18,8 @@ class _SlugsScreenState extends State<SlugsScreen> {
       home: Scaffold(
         body: Stack(
            children: [ 
-            Image.asset("assets/food3.jpg" ,fit: BoxFit.cover,),
+            Image.asset("assets/food3.jpg" ,fit: BoxFit.cover, width: double.infinity,height: double.infinity,),
+            BackdropFilter(filter: ImageFilter.blur(sigmaX: 24, sigmaY: 34), child: Expanded(child: SizedBox(),),),
           ],
         ),
       ),
