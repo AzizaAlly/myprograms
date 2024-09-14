@@ -14,7 +14,7 @@ class AzizaText extends StatelessWidget {
       name,
       style: GoogleFonts.alice(
           textStyle: const TextStyle(
-              color: Colors.white, fontSize: 50, fontWeight: FontWeight.w600)),
+              color: Colors.white, fontSize: 45, fontWeight: FontWeight.w600)),
     );
   }
 }

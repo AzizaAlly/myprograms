@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -25,8 +24,7 @@ class _HomePageScreenState extends State<HomePageScreen> {
 
   int currentBtn = 0;
   final data = [
-    {"name1": "What will we\n cook today?", 
-    "image1": "assets/image4.png"},
+    {"name1": "What will we\n cook today?", "image1": "assets/image4.png"},
     {
       "name1": "Very delicious \n favourable food",
       "image1": "assets/pizza1.png"
@@ -163,9 +161,11 @@ class _HomePageScreenState extends State<HomePageScreen> {
                             filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
                             child: SizedBox(
                               height: MediaQuery.of(context).size.height / 2.2,
-                              
                               child: PageView.builder(
                                 controller: pageController,
+                                onPageChanged: (value) => setState(() {
+                                  pageno = value;
+                                }),
                                 itemCount: data.length,
                                 itemBuilder: (context, index) => Stack(
                                   children: [
@@ -183,14 +183,23 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                         ),
                                         child: Column(
                                           children: [
-                                            Center(
-                                              child: Image.asset(
-                                                data[index]["image1"]!,
-                                                height: 200,
-                                                width: 200,
-                                                fit: BoxFit.contain,
-                                                alignment: AlignmentDirectional
-                                                    .topCenter,
+                                            GestureDetector(
+                                              onTap: () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                     const   SlugsScreen(),
+                                                  )),
+                                              child: Center(
+                                                child: Image.asset(
+                                                  data[index]["image1"]!,
+                                                  height: 200,
+                                                  width: 200,
+                                                  fit: BoxFit.contain,
+                                                  alignment:
+                                                      AlignmentDirectional
+                                                          .topCenter,
+                                                ),
                                               ),
                                             ),
                                             Padding(
@@ -228,20 +237,41 @@ class _HomePageScreenState extends State<HomePageScreen> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 12.0),
+                                              padding: const EdgeInsets.only(
+                                                  left: 12.0),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  pageController.animateToPage(pageno-1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
-                                                },
-                                                child: const Icon(CupertinoIcons.chevron_back, color: Colors.white,)),
+                                                  onTap: () {
+                                                    pageController.animateToPage(
+                                                        pageno - 1,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        curve: Curves
+                                                            .fastLinearToSlowEaseIn);
+                                                  },
+                                                  child: const Icon(
+                                                    CupertinoIcons.chevron_back,
+                                                    color: Colors.white,
+                                                  )),
                                             ),
                                             Padding(
-                                              padding: const EdgeInsets.only(right: 24.0),
+                                              padding: const EdgeInsets.only(
+                                                  right: 24.0),
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  pageController.animateToPage(pageno+1, duration: const Duration(seconds: 1), curve: Curves.fastLinearToSlowEaseIn);
-                                                },
-                                                child: const Icon(CupertinoIcons.chevron_forward, color: Colors.white,)),
+                                                  onTap: () {
+                                                    pageController.animateToPage(
+                                                        pageno + 1,
+                                                        duration:
+                                                            const Duration(
+                                                                seconds: 1),
+                                                        curve: Curves
+                                                            .fastLinearToSlowEaseIn);
+                                                  },
+                                                  child: const Icon(
+                                                    CupertinoIcons
+                                                        .chevron_forward,
+                                                    color: Colors.white,
+                                                  )),
                                             ),
                                           ],
                                         ),
